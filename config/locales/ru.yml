@@ -3,6 +3,7 @@ ru:
     errors:
       messages:
         blank: поле должно быть заполнено
+        taken: уже занято
   simple_form:
     labels:
       resident:
@@ -42,3 +43,9 @@ ru:
   cancel: Отмена
   create: Создать
   update: Обновить
+  views:
+    pagination:
+      first: Первая
+      previous: '<<'
+      next: '>>'
+      last: Последняя

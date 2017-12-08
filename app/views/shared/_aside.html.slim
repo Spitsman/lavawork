@@ -1,0 +1,28 @@
+aside.main-sidebar
+  /! sidebar: style can be found in sidebar.less
+  section.sidebar
+    ul.sidebar-menu data-widget="tree"
+      li.header Главное меню
+      li class="#{'active' if controller_name == 'residents'}"
+        = link_to residents_path do
+          i.fa.fa-users
+          span = t('menu.residents')
+      li.treeview class="#{'active' if controller_name == 'messages'}"
+        a href="#"
+          i.fa.fa-telegram
+          span Telegram
+          span.pull-right-container
+            i.fa.fa-angle-left.pull-right
+        ul.treeview-menu
+          li
+            = link_to messages_path do
+              i.fa.fa-circle-o
+              = t('menu.send_message')
+          li
+            = link_to broadcast_path do
+              i.fa.fa-circle-o
+              = t('menu.broadcast')
+      li class="#{'active' if controller_name == 'transactions'}"
+        = link_to transactions_path
+          i.fa.fa-th
+          span = t('menu.transactions')

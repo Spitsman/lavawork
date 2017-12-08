@@ -1,12 +1,15 @@
-.page-header
-  h1
-    = t('menu.broadcast')
+section.content-header
+  h1 = t('menu.broadcast')
 
-.col-md-6
-  .alert.alert-info
-    = t('broadcast.alert')
-
-  = simple_form_for :message, as: :message, url: send_broadcast_path, html: { class: 'login__form' } do |f|
-    = f.input :text, as: :text, label: t('message.text')
-
-    => f.button :submit, t('message.send'), class: 'btn btn-primary'
+section.content
+  .row
+    .col-md-6
+      .callout.callout-info
+        h4 Внимание!
+        p
+          = t('broadcast.alert')
+      .box
+        .box-body
+          = simple_form_for :message, as: :message, url: send_broadcast_path, html: { class: 'login__form' } do |f|
+            = f.input :text, as: :text, label: t('message.text')
+            => f.button :submit, t('message.send'), class: 'btn btn-primary'

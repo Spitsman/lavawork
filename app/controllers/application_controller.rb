@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_filter :require_user
 
-  layout 'admin'
+  # layout 'admin'
+  layout 'application'
 
   def require_user
     redirect_to sign_in_url if current_user.nil?

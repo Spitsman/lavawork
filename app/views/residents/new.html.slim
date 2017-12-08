@@ -1,7 +1,9 @@
-.row
-  .col-md-6
-    .page-header
-      h1
-        = t('residents.new')
+section.content-header
+  h1 = t('residents.new')
 
-    = render partial: 'residents/shared/form', locals: { resident: resource_resident, url: residents_path, submit_text: t('create') }
+section.content
+  .row
+    .col-md-6
+      .box
+        .box-body
+          = render partial: 'residents/shared/form', locals: { resident: resource_resident, url: residents_path, submit_text: t('create') }

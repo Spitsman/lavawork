@@ -5,6 +5,7 @@
     total_pages  : total number of pages
     per_page     : number of items to fetch per page
     remote       : data-remote
-span.last
+/ span.last
+li.paginate_button.previous
 	== link_to_unless current_page.last?, t('views.pagination.last').html_safe, url, :remote => remote
 '

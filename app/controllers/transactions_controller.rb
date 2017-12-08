@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
   protected
 
   def transactions_collection
-    @transactions_collection ||= Transaction.ordered.page(params[:page]).decorate
+    @transactions_collection ||= Transaction.includes(:receiver).includes(:sender).ordered.page(params[:page]).decorate
   end
 
 end

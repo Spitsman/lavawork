@@ -1,24 +1,32 @@
-.page-header
-  h1
-    = t('menu.transactions')
+section.content-header
+  h1 = t('menu.transactions')
 
-- if transactions_collection.any?
-  table.table.table-middled
-    thead
-      tr
-        th = t('transactions.from')
-        th = t('transactions.to')
-        th = t('transactions.days')
-        th = t('transactions.created_at')
-    tbody
-      - transactions_collection.each do |transaction|
-        tr
-          td = transaction.sender.display_name
-          td = transaction.receiver.display_name
-          td = transaction.days
-          td = transaction.display_created_at
-  center
-    = paginate transactions_collection
-- else
-  center
-    h3.text-muted No transactions found.
+section.content
+  - if transactions_collection.any?
+    .row
+      .col-sm-12
+        .box
+          .box-header
+            h3.box-title
+              | Транзации резидентов
+          .box-body
+            table.table.table-bordered.table-hover.dataTable
+              thead
+                tr
+                  th = t('transactions.from')
+                  th = t('transactions.to')
+                  th = t('transactions.days')
+                  th = t('transactions.created_at')
+              tbody
+                - transactions_collection.each do |transaction|
+                  tr
+                    td = transaction.sender.display_name
+                    td = transaction.receiver.display_name
+                    td = transaction.days
+                    td = transaction.display_created_at
+
+            center
+              = paginate transactions_collection
+  - else
+    center
+      h3.text-muted No transactions found.

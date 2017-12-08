@@ -1,36 +1,43 @@
-.page-header
-  .pull-right
-    = link_to t('residents.new'), new_resident_path, class: 'btn btn-primary'
-  h1
-    = t('menu.residents')
+section.content-header
+  h1 = t('menu.residents')
 
-- if residents_collection.any?
-  table.table.table-middled
-    thead
-      tr
-        th = t('residents.first_name')
-        th = t('residents.last_name')
-        th = t('residents.phone')
-        th = t('residents.days')
-        th = t('residents.expire_at')
-        th Telegram ID
-        th Telegram Username
-        th Active
-        th.text-right
-    tbody
-      - residents_collection.each do |resident|
-        tr
-          td = resident.first_name
-          td = resident.last_name
-          td = resident.phone
-          td = resident.days
-          td = resident.display_expire_at
-          td = resident.telegram_id
-          td = resident.telegram_username
-          td = resident.display_active
-          td.text-right
-            => link_to fa_icon('pencil'), edit_resident_path(resident), class: 'btn btn-sm btn-primary'
-            => link_to fa_icon('trash'), resident_path(resident), method: 'delete', data: { confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm'
-- else
-  center
-    h3.text-muted No residents found.
+section.content
+  - if residents_collection.any?
+    .row
+      .col-sm-12
+        .box
+          .box-header
+            .pull-right
+              = link_to t('residents.new'), new_resident_path, class: 'btn btn-primary'
+            h3.box-title
+              | Список резидентов
+          .box-body
+            table.table.table-bordered.table-hover.dataTable
+              thead
+                tr
+                  th = t('residents.first_name')
+                  th = t('residents.last_name')
+                  th = t('residents.phone')
+                  th = t('residents.days')
+                  th = t('residents.expire_at')
+                  th Telegram ID
+                  th Telegram Username
+                  th Active
+                  th.text-right
+              tbody
+                - residents_collection.each do |resident|
+                  tr
+                    td = resident.first_name
+                    td = resident.last_name
+                    td = resident.phone
+                    td = resident.days
+                    td = resident.display_expire_at
+                    td = resident.telegram_id
+                    td = resident.telegram_username
+                    td = resident.display_active
+                    td.text-right
+                      => link_to fa_icon('pencil'), edit_resident_path(resident), class: 'btn btn-sm btn-primary'
+                      => link_to fa_icon('trash'), resident_path(resident), method: 'delete', data: { confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm'
+  - else
+    center
+      h3.text-muted No residents found.
