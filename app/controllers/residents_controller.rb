@@ -11,7 +11,7 @@ class ResidentsController < ApplicationController
   def create
     if resource_resident.save
       flash[:success] = 'Resident created'
-      redirect_to esidents_path
+      redirect_to residents_path
     else
       render action: :new
     end
