@@ -7,7 +7,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   # before_action :update_telegram_username, except: :start
 
   def create_message
-    sender.messages.create(text: from[:text])
+    sender.messages.create(text: payload['text'])
   end
 
   def require_resident

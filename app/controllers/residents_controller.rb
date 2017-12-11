@@ -53,11 +53,11 @@ class ResidentsController < ApplicationController
   end
 
   def sent_transactions_collection
-    @sent_transactions_collection ||= resource_resident.sent_transactions.ordered.limit(10).decorate
+    @sent_transactions_collection ||= resource_resident.sent_transactions.ordered.limit(20).decorate
   end
 
   def received_transactions_collection
-    @received_transactions_collection ||= resource_resident.received_transactions.ordered.limit(10).decorate
+    @received_transactions_collection ||= resource_resident.received_transactions.ordered.limit(20).decorate
   end
 
   def messages_collection

@@ -8,7 +8,7 @@ class MessagesController < ApplicationController
   protected
 
   def messages_collection
-    @messages_collection ||= Message.page(params[:page]).decorate
+    @messages_collection ||= Message.ordered.page(params[:page]).decorate
   end
 
 end
