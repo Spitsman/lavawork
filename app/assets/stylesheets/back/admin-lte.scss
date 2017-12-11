@@ -29,6 +29,10 @@ body {
   overflow-y: auto;
 }
 /* Layout */
+section.sidebar {
+  font-weight: 600 !important;
+}
+
 .wrapper {
   min-height: 100%;
   position: relative;
@@ -336,6 +340,7 @@ a:hover {
 
 .main-header .logo .logo-lg {
   display: block;
+  font-weight: 400;
 }
 
 .main-header .logo .logo-mini {

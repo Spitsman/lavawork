@@ -1,7 +1,10 @@
 class Resident < ActiveRecord::Base
 
-  validates :phone, uniqueness: true
-  validates :telegram_id, uniqueness: true, allow_nil: true, allow_blank: true
+  validates :phone, uniqueness: { allow_nil: true, allow_blank: true }, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
+  validates :telegram_id, uniqueness: { allow_nil: true, allow_blank: true }
   validates_numericality_of :days, only_integer: true, greater_than_or_equal_to: 0
 
   has_many :sent_transactions, class_name: 'Transaction'
