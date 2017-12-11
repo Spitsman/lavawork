@@ -16,7 +16,7 @@ header.main-header
       span.sr-only Toggle navigation
     .navbar-custom-menu
       ul.nav.navbar-nav
-        /li
+        li
           = link_to sign_out_path, method: :delete do
             ' Выйти
             i.fa.fa-sign-out
@@ -170,7 +170,7 @@ header.main-header
             li.footer
               a href="#"  View all tasks
         /! User Account: style can be found in dropdown.less
-        li.dropdown.user.user-menu
+        /li.dropdown.user.user-menu
           a.dropdown-toggle data-toggle="dropdown" href="#"
             span.hidden-xs Александр Васильев
           ul.dropdown-menu

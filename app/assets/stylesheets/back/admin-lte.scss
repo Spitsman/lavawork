@@ -31,7 +31,8 @@ body {
 /* Layout */
 
 section.sidebar,
-li.user-menu {
+li.user-menu,
+ul.nav.navbar-nav > li {
   font-weight: 600 !important;
 }
 

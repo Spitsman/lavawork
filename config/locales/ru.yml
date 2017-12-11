@@ -36,7 +36,7 @@ ru:
     transactions: Транзакции
     send_message: Отправить сообщение
     broadcast: Рассылка
-    messages: Сообщения
+    messages: История сообщений
   broadcast:
     alert: Это сообщение будет отправлено всем резидентам
   sign_out: Выйти
