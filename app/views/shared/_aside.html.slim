@@ -7,18 +7,18 @@ aside.main-sidebar
         = link_to residents_path do
           i.fa.fa-users
           span = t('menu.residents')
-      li.treeview class="#{'active' if controller_name == 'messages'}"
+      li.treeview class="#{'active' if controller_name == 'telegram'}"
         a href="#"
           i.fa.fa-telegram
           span Telegram
           span.pull-right-container
             i.fa.fa-angle-left.pull-right
         ul.treeview-menu
-          li
-            = link_to messages_path do
+          li class="#{'active' if action_name == 'index'}"
+            = link_to telegram_path do
               i.fa.fa-circle-o
               = t('menu.send_message')
-          li
+          li class="#{'active' if action_name == 'broadcast'}"
             = link_to broadcast_path do
               i.fa.fa-circle-o
               = t('menu.broadcast')
@@ -26,3 +26,8 @@ aside.main-sidebar
         = link_to transactions_path
           i.fa.fa-th
           span = t('menu.transactions')
+
+      li class="#{'active' if controller_name == 'messages'}"
+        = link_to messages_path
+          i.fa.fa-envelope
+          span = t('menu.messages')

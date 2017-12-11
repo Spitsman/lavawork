@@ -1,24 +1,29 @@
-/ .page-header
-/   h1
-/     = t('menu.send_message')
-/
-/ .col-md-6
-/   = simple_form_for :message, as: :message, url: send_message_path, html: { class: 'login__form' } do |f|
-/     = f.input :chat_id, collection: residents_collection, include_blank: false, label: t('message.receiver')
-/     = f.input :text, as: :text, label: t('message.text')
-/
-/     => f.button :submit, t('message.send'), class: 'btn btn-primary'
-
 section.content-header
-  h1 = t('menu.send_message')
+  h1 Сообщения
 
 section.content
-  .row
-    .col-md-6
-      .box
-        .box-body
-          = simple_form_for :message, as: :message, url: send_message_path, html: { class: 'login__form' } do |f|
-            = f.input :chat_id, collection: residents_collection, include_blank: false, label: t('message.receiver')
-            = f.input :text, as: :text, label: t('message.text')
-
-            => f.button :submit, t('message.send'), class: 'btn btn-primary'
+  - if messages_collection.any?
+    .row
+      .col-sm-12
+        .box
+          .box-header
+            h3.box-title
+              | Сообщения резидентов
+          .box-body
+            table.table.table-bordered.table-hover.dataTable
+              thead
+                tr
+                  th Отправитель
+                  th Текст
+                  th Дата
+              tbody
+                - messages_collection.each do |message|
+                  tr
+                    td = message.resident.decorate.display_name
+                    td = message.text
+                    td = message.display_created_at
+            center
+              = paginate messages_collection
+  - else
+    center
+      h3.text-muted No messages found.

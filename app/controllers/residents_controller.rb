@@ -1,6 +1,6 @@
 class ResidentsController < ApplicationController
 
-  helper_method :resource_resident, :residents_collection, :decorated_resident, :sent_transactions_collection, :received_transactions_collection
+  helper_method :resource_resident, :residents_collection, :decorated_resident, :sent_transactions_collection, :received_transactions_collection, :messages_collection
 
   def index
   end
@@ -58,6 +58,10 @@ class ResidentsController < ApplicationController
 
   def received_transactions_collection
     @received_transactions_collection ||= resource_resident.received_transactions.ordered.limit(10).decorate
+  end
+
+  def messages_collection
+    @messages_collection ||= resource_resident.messages.ordered.limit(10).decorate
   end
 
 end

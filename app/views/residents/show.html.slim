@@ -3,7 +3,7 @@ section.content-header
 
 section.content
   .row
-    .col-md-3
+    .col-md-4
       .box.box-primary
         .box-body.box-profile
           = image_tag 'dummy.jpg', class: 'profile-user-img img-responsive img-circle'
@@ -24,9 +24,22 @@ section.content
               b Телефон
               p.pull-right = decorated_resident.phone
 
+      .box.box-primary
+        .box-header.with-border
+          h3.box-title Сообщения
+        .box-body.box-profile
+          - if messages_collection.any?
+            - messages_collection.each do |message|
+              p = message.text
+              p.text-muted = message.display_created_at
+              hr
+          - else
+            center
+              em.text-muted Пусто
 
 
-    .col-md-9
+
+    .col-md-8
       .box.box-primary
         .box-header.with-border
           h3.box-title Транзакции
@@ -38,7 +51,7 @@ section.content
                 | Отправленные
             li
               a href="#received_transactions" data-toggle="tab" aria-expanded="true"
-                | Полученные 
+                | Полученные
           .tab-content
             .tab-pane.active#sent_transactions
               - if sent_transactions_collection.any?

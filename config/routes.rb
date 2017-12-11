@@ -6,13 +6,14 @@ Rails.application.routes.draw do
   delete 'sign_out' => 'user_sessions#destroy'
 
   resources :residents
+  resources :messages, only: :index
 
-  get 'messages/broadcast' => 'messages#broadcast', as: 'broadcast'
-  post 'messages/broadcast' => 'messages#send_broadcast', as: 'send_broadcast'
-  get 'messages' => 'messages#index'
-  post 'messages/send' => 'messages#send_message', as: 'send_message'
+  get 'telegram/broadcast' => 'telegram#broadcast', as: 'broadcast'
+  post 'telegram/broadcast' => 'telegram#send_broadcast', as: 'send_broadcast'
+  get 'telegram' => 'telegram#index', as: 'telegram'
+  post 'telegram/send' => 'telegram#send_message', as: 'send_message'
 
   resources :transactions, only: :index
 
-  telegram_webhooks TelegramController
+  telegram_webhooks TelegramWebhooksController
 end
