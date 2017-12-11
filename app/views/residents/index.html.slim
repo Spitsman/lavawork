@@ -15,8 +15,7 @@ section.content
             table.table.table-bordered.table-hover.dataTable
               thead
                 tr
-                  th = t('residents.first_name')
-                  th = t('residents.last_name')
+                  th Имя и фамилия
                   th = t('residents.phone')
                   th = t('residents.days')
                   th = t('residents.expire_at')
@@ -27,8 +26,7 @@ section.content
               tbody
                 - residents_collection.each do |resident|
                   tr
-                    td = resident.first_name
-                    td = resident.last_name
+                    td = link_to resident.display_name, resident
                     td = resident.phone
                     td = resident.days
                     td = resident.display_expire_at

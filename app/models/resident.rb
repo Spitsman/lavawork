@@ -7,8 +7,8 @@ class Resident < ActiveRecord::Base
   validates :telegram_id, uniqueness: { allow_nil: true, allow_blank: true }
   validates_numericality_of :days, only_integer: true, greater_than_or_equal_to: 0
 
-  has_many :sent_transactions, class_name: 'Transaction'
-  has_many :received_transactions, class_name: 'Transaction'
+  has_many :sent_transactions, class_name: 'Transaction', foreign_key: :sender_id
+  has_many :received_transactions, class_name: 'Transaction', foreign_key: :receiver_id
 
   scope :active, -> { where(active: true) }
   scope :active_first, -> { order("CASE active WHEN true THEN 1 ELSE 2 END") }

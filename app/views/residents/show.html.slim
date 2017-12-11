@@ -1,0 +1,77 @@
+section.content-header
+  h1 Профиль резидента
+
+section.content
+  .row
+    .col-md-3
+      .box.box-primary
+        .box-body.box-profile
+          = image_tag 'dummy.jpg', class: 'profile-user-img img-responsive img-circle'
+          h3.profile-username.text-center
+            = decorated_resident.display_name
+          p.text-muted.text-center Резидент
+          ul.list-group.list-group-unbordered
+            li.list-group-item
+              b Дни
+              p.pull-right = "#{decorated_resident.days} (до #{decorated_resident.display_expire_at})"
+            li.list-group-item
+              b Telegram Username
+              p.pull-right = decorated_resident.telegram_username
+            li.list-group-item
+              b Telegram ID
+              p.pull-right = decorated_resident.telegram_id
+            li.list-group-item
+              b Телефон
+              p.pull-right = decorated_resident.phone
+
+
+
+    .col-md-9
+      .box.box-primary
+        .box-header.with-border
+          h3.box-title Транзакции
+        / .box-body
+        .nav-tabs-custom
+          ul.nav.nav-tabs
+            li.active
+              a href="#sent_transactions" data-toggle="tab" aria-expanded="true"
+                | Отправленные
+            li
+              a href="#received_transactions" data-toggle="tab" aria-expanded="true"
+                | Полученные 
+          .tab-content
+            .tab-pane.active#sent_transactions
+              - if sent_transactions_collection.any?
+                table.table.table-bordered.table-hover.dataTable
+                  thead
+                    tr
+                      th Кому
+                      th Дни
+                      th Дата
+                  tbody
+                    - sent_transactions_collection.each do |transaction|
+                      tr
+                        td = transaction.receiver.decorate.display_name
+                        td = transaction.days
+                        td = transaction.decorate.display_created_at
+              - else
+                center
+                  em.text-muted Пусто
+
+            .tab-pane#received_transactions
+              - if received_transactions_collection.any?
+                table.table.table-bordered.table-hover.dataTable
+                  thead
+                    tr
+                      th От кого
+                      th Дни
+                      th Дата
+                  tbody
+                    - received_transactions_collection.each do |transaction|
+                      tr
+                        td = transaction.sender.decorate.display_name
+                        td = transaction.days
+                        td = transaction.decorate.display_created_at
+              - else
+                center
+                  em.text-muted Пусто

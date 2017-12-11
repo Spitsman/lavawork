@@ -29,7 +29,9 @@ body {
   overflow-y: auto;
 }
 /* Layout */
-section.sidebar {
+
+section.sidebar,
+li.user-menu {
   font-weight: 600 !important;
 }
 
