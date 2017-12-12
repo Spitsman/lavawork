@@ -19,7 +19,7 @@ section.content
               tbody
                 - messages_collection.each do |message|
                   tr
-                    td = message.resident.decorate.display_name
+                    td = link_to message.resident.decorate.display_name, message.resident
                     td = message.text
                     td = message.display_created_at
             center
