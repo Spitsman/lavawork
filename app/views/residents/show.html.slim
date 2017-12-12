@@ -23,6 +23,7 @@ section.content
             li.list-group-item
               b Телефон
               p.pull-right = decorated_resident.phone
+            = link_to 'Редактировать', edit_resident_path(decorated_resident), class: 'btn btn-primary btn-block'
 
       .box.box-primary
         .box-header.with-border
