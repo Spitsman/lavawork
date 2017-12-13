@@ -91,34 +91,33 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     if sender.present?
       respond_with :message, text: "Привет, #{sender.first_name}!"
     else
-      save_context :wait_for_name
-      respond_with :message, text: "Привет, друг! Пришли свои имя и фамилию чтоб я мог тебя запомнить или /cancel для отмены."
+      save_context :wait_for_contact
+      respond_with :message,
+        text: "Привет, друг! Пришли мне свой контакт чтоб я мог тебя запомнить.",
+        reply_markup: { keyboard: [[{request_contact: true, text: 'Отправить контакт'}]], resize_keyboard: true }
     end
   end
 
-  context_handler :wait_for_name do |*words|
-    session[:first_name] = words[0]
-    session[:last_name] = words[1]
+  context_handler :wait_for_contact do |*words|
+    unless payload['contact'].present?
+      save_context :wait_for_contact
+      respond_with :message, text: 'Просто пришли контакт'
+      return
+    end
 
-    save_context :wait_for_phone
-    respond_with :message, text: 'Теперь пришли номер телефона'
-  end
-
-  context_handler :wait_for_phone do |*words|
     resident = Resident.new(
-      first_name: session[:first_name],
-      last_name: session[:last_name],
-      phone: words[0],
+      first_name: payload['contact']['first_name'],
+      last_name: payload['contact']['last_name'],
+      phone: payload['contact']['phone_number'],
       expire_at: Date.today + 1.day,
-      telegram_id: from['id'],
+      telegram_id: payload['contact']['user_id'],
       telegram_username: from['username']
     )
-
     if resident.save
-      respond_with :message, text: 'Ты успешно зарегистрировался, у тебя 1 день коворкинга'
+      respond_with :message, text: 'Ты успешно зарегистрировался, у тебя 1 день коворкинга', reply_markup: { remove_keyboard: true }
     else
-      save_context :wait_for_phone
-      respond_with :message, text: "Ошибка: #{resident.errors.full_messages.first}. Попробуй еще раз."
+      save_context :wait_for_contact
+      respond_with :message, text: "Ошибка: #{resident.errors.full_messages.first}. Заполни контактные данные и попробуй еще раз."
     end
   end
 
