@@ -127,7 +127,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def days
-    response = "У вас осталось #{sender.days} дней коворкинга"
+    response = "У вас #{Russian.pluralize(sender.days, 'остался', 'осталось', 'осталось')} #{sender.days} #{Russian.pluralize(sender.days, 'день', 'дня', 'дней')} коворкинга"
     respond_with :message, text: response
   end
 
