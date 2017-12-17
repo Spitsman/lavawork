@@ -9,7 +9,7 @@ class Resident < ActiveRecord::Base
 
   has_many :sent_transactions, class_name: 'Transaction', foreign_key: :sender_id
   has_many :received_transactions, class_name: 'Transaction', foreign_key: :receiver_id
-  has_many :messages
+  has_many :messages, dependent: :destroy
 
   scope :active, -> { where(active: true) }
   scope :active_first, -> { order("CASE active WHEN true THEN 1 ELSE 2 END") }
