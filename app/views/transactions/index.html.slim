@@ -21,7 +21,7 @@ section.content
                 - transactions_collection.each do |transaction|
                   tr
                     td = transaction.sender ? transaction.sender.display_name : '–'
-                    td = transaction.receiver.display_name
+                    td = transaction.receiver ? transaction.receiver.display_name : '–'
                     td = transaction.days
                     td = transaction.display_created_at
 
