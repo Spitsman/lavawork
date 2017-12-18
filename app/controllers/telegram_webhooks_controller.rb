@@ -1,5 +1,6 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
+  include CallbackQueryContext
 
   skip_before_action :verify_authenticity_token, :require_user
   before_action :require_resident, only: [:days, :residents, :send_days]
@@ -25,26 +26,23 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   def send_days
+    respond_with :message,
+      text: "Укажите получателя",
+      reply_markup: {
+        inline_keyboard: Resident.ordered.map do |r|
+          [ text: r.decorate.display_name, callback_data: "resident:#{{ id: r.id, name: r.decorate.display_name }.to_json}" ]
+        end
+      }
     save_context :send_days
-    respond_with :message, text: "Укажите telegram-логин получателя"
   end
 
-  context_handler :send_days do |*words|
-    receiver = Resident.find_by(telegram_username: words[0])
-    response = if receiver.present?
-      if receiver != sender
-        session[:receiver] = words[0]
-        save_context :wait_for_days
-        'Укажите количество дней'
-      else
-        save_context :send_days
-        'Нельзя переводить дни самому себе'
-      end
-    else
-      save_context :send_days
-      'Получатель не найден. Просмотрите список резидентов командой /residents или введите /cancel для отмены.'
-    end
-    respond_with :message, text: response
+  def resident_callback_query(data)
+    data_hash = JSON.parse(data)
+    receiver = Resident.find(data_hash['id'])
+    session[:receiver] = data_hash['id']
+    save_context :wait_for_days
+    edit_message :text, text: "Выбранный резидент: #{data_hash['name']}"
+    respond_with :message, text: 'Укажите количество дней'
   end
 
   context_handler :wait_for_days do |*words|
@@ -56,18 +54,16 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       save_context :wait_for_days
       'У вас не хватает дней'
     else
-      receiver = Resident.find_by(telegram_username: session[:receiver])
+      receiver = Resident.find(session[:receiver])
       TransferDaysService.call(sender, receiver, days)
       session[:receiver] = nil
-      "Перечислено #{days} дней пользователю #{receiver.decorate.display_name}"
+      "#{Russian.pluralize(days, 'Перечислен', 'Перечислено', 'Перечислено')} #{days} #{Russian.pluralize(days, 'день', 'дня', 'дней')} пользователю #{receiver.decorate.display_name}"
     end
     respond_with :message, text: response
   end
 
   def cancel
-    session[:receiver] = nil
-    session[:first_name] = nil
-    session[:last_name] = nil
+    session.clear
     respond_with :message, text: 'OK'
   end
 
