@@ -46,6 +46,7 @@ ru:
   update: Обновить
   views:
     pagination:
+      truncate: ...
       first: Первая
       previous: '<<'
       next: '>>'
