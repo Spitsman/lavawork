@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171211134504) do
+ActiveRecord::Schema.define(version: 20171230214611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "likes", force: :cascade do |t|
+    t.string   "liker_type"
+    t.integer  "liker_id"
+    t.string   "likeable_type"
+    t.integer  "likeable_id"
+    t.datetime "created_at"
+  end
+
+  add_index "likes", ["likeable_id", "likeable_type"], name: "fk_likeables", using: :btree
+  add_index "likes", ["liker_id", "liker_type"], name: "fk_likes", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "resident_id"
@@ -32,6 +43,8 @@ ActiveRecord::Schema.define(version: 20171211134504) do
     t.boolean  "active",            default: true, null: false
     t.string   "telegram_username"
     t.date     "expire_at"
+    t.integer  "likees_count",      default: 0
+    t.integer  "likers_count",      default: 0
   end
 
   create_table "transactions", force: :cascade do |t|

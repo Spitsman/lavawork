@@ -127,6 +127,31 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message, text: response
   end
 
+  def voting
+    respond_with :message,
+      text: 'Голосуй за коворкеров',
+      reply_markup: {
+        inline_keyboard:
+          Resident.where.not(id: sender).ordered.map do |r|
+            [ text: "#{r.decorate.display_name} – #{r.likers_count} #{'👍' if r.liked_by?(sender)}", callback_data: "voting:#{{id: r.id}.to_json}" ]
+          end
+      }
+  end
+
+  def voting_callback_query(data)
+    data_hash = JSON.parse(data)
+    res = Resident.find(data_hash['id'])
+    sender.toggle_like! res
+    edit_message :text,
+      text: "Ты проголосовал за: #{res.decorate.display_name}",
+      reply_markup: {
+        inline_keyboard:
+          Resident.where.not(id: sender).ordered.map do |r|
+            [ text: "#{r.decorate.display_name} – #{r.likers_count} #{'👍' if r.liked_by?(sender)}", callback_data: "voting:#{{id: r.id}.to_json}" ]
+          end
+      }
+    end
+
   protected
 
   def sender

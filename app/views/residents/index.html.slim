@@ -12,7 +12,7 @@ section.content
             h3.box-title
               | Список резидентов
           .box-body
-            table.table.table-bordered.table-hover.dataTable
+            table.table.table-bproducted.table-hover.dataTable
               thead
                 tr
                   th Имя и фамилия
@@ -22,6 +22,7 @@ section.content
                   th Telegram ID
                   th Telegram Username
                   th Active
+                  th Голоса
                   th.text-right
               tbody
                 - residents_collection.each do |resident|
@@ -33,6 +34,7 @@ section.content
                     td = resident.telegram_id
                     td = resident.telegram_username
                     td = resident.display_active
+                    td = resident.likers_count
                     td.text-right
                       => link_to fa_icon('pencil'), edit_resident_path(resident), class: 'btn btn-sm btn-primary'
                       => link_to fa_icon('trash'), resident_path(resident), method: 'delete', data: { confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm'

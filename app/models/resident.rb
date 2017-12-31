@@ -1,5 +1,8 @@
 class Resident < ActiveRecord::Base
 
+  acts_as_likeable
+  acts_as_liker
+
   validates :phone, uniqueness: { allow_nil: true, allow_blank: true }, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
