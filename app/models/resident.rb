@@ -5,7 +5,6 @@ class Resident < ActiveRecord::Base
 
   validates :phone, uniqueness: { allow_nil: true, allow_blank: true }, presence: true
   validates :first_name, presence: true
-  validates :last_name, presence: true
 
   validates :telegram_id, uniqueness: { allow_nil: true, allow_blank: true }
   validates_numericality_of :days, only_integer: true, greater_than_or_equal_to: 0
@@ -20,6 +19,10 @@ class Resident < ActiveRecord::Base
 
   before_validation do
     self.telegram_id = nil if self.telegram_id.blank?
+  end
+
+  def reputation
+    self.likers(Resident).reduce(0){|sum,r| sum += r.likers_count} + self.likers_count
   end
 
   def days

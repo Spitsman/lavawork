@@ -18,7 +18,7 @@ class ResidentDecorator < BaseDecorator
   end
 
   def display_expire_at
-    source.expire_at.try :strftime, '%d.%m.%Y'
+    Russian::strftime(source.expire_at, "%d %B %Y")
   end
 
 end

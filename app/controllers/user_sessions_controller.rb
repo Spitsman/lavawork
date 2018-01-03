@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
 
   def create
     if resource_session.save
-      flash[:notice] = 'You signed in'
+      flash[:notice] = 'Вы вошли'
       redirect_to root_url
     else
       render :action => :new
