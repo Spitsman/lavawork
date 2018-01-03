@@ -65,7 +65,7 @@ section.content
                   tbody
                     - sent_transactions_collection.each do |transaction|
                       tr
-                        td = transaction.receiver.decorate.display_name
+                        td = transaction.receiver&.decorate&.display_name || '–'
                         td = transaction.days
                         td = transaction.decorate.display_created_at
               - else
@@ -83,7 +83,7 @@ section.content
                   tbody
                     - received_transactions_collection.each do |transaction|
                       tr
-                        td = transaction.sender.decorate.display_name
+                        td = transaction.sender&.decorate&.display_name || '–'
                         td = transaction.days
                         td = transaction.decorate.display_created_at
               - else
