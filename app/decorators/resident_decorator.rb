@@ -6,11 +6,11 @@ class ResidentDecorator < BaseDecorator
   decorates_association :received_transactions
 
   def display_name
-    [source.first_name.titleize, source.last_name.titleize].join(' ')
+    [source.first_name&.titleize, source.last_name&.titleize].join(' ')
   end
 
   def display_name_with_telegram_username
-    "#{source.first_name.titleize} #{source.last_name.titleize} (#{source.telegram_username})"
+    "#{source.first_name.titleize} #{source.last_name&.titleize} (#{source.telegram_username})"
   end
 
   def display_active
@@ -20,5 +20,9 @@ class ResidentDecorator < BaseDecorator
   def display_expire_at
     Russian::strftime(source.expire_at, "%d %B %Y")
   end
+
+  # def display_current_amount
+  #   h.number_to_currency(self.current_amount.round(2), unit: 'l')
+  # end
 
 end

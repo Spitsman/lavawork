@@ -10,7 +10,7 @@ class ResidentsController < ApplicationController
 
   def create
     if resource_resident.save
-      flash[:success] = 'Resident created'
+      flash[:success] = 'Резидент создан'
       redirect_to residents_path
     else
       render action: :new
@@ -22,7 +22,7 @@ class ResidentsController < ApplicationController
 
   def update
     if resource_resident.update_attributes(resident_params)
-      flash[:success] = 'Resident updated'
+      flash[:success] = 'Резидент обновлен'
       redirect_to residents_path
     else
       render action: :edit

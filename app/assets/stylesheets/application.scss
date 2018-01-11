@@ -9,5 +9,7 @@
 @import 'ionicons';
 
 #toast-container > div {
-    opacity: 0.95;
+    opacity: 1;
+    font-weight: 600;
+    // top: 40px;
 }
