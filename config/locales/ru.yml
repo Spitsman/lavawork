@@ -13,11 +13,16 @@ ru:
         days: Дни
         telegram_id: Telegram ID
         telegram_username: Telegram Username
+        amount: Лаве
+      settings:
+        demurrage: Демередж
+        commission: Коммиссия
+        master_account: Мастер-аккаунт
 
   transactions:
     from: От кого
     to: Кому
-    days: Дни
+    amount: Лаве
     created_at: Дата
   residents:
     new: Новый резидент
@@ -25,8 +30,7 @@ ru:
     first_name: Имя
     last_name: Фамилия
     phone: Телефон
-    days: Дни
-    expire_at: Активен до
+    current_amount: Лаве
   message:
     send: Отправить
     text: Сообщение
@@ -37,6 +41,7 @@ ru:
     send_message: Отправить сообщение
     broadcast: Рассылка
     messages: История сообщений
+    settings: Настройки
   broadcast:
     alert: Это сообщение будет отправлено всем резидентам
   sign_out: Выйти

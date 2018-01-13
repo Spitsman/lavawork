@@ -17,12 +17,11 @@ section.content
                 tr
                   th Имя и фамилия
                   th = t('residents.phone')
-                  th = t('residents.days')
-                  th = t('residents.expire_at')
+                  th.text-right = t('residents.current_amount')
                   th Telegram ID
                   th Telegram Username
-                  th Active
-                  th Голоса
+                  / th Active
+                  / th Голоса
                   th Репутация
                   th.text-right
               tbody
@@ -30,12 +29,11 @@ section.content
                   tr
                     td = link_to resident.display_name, resident
                     td = resident.phone
-                    td = resident.days
-                    td = resident.display_expire_at
+                    td.text-right = resident.display_current_amount
                     td = resident.telegram_id
                     td = resident.telegram_username
-                    td = resident.display_active
-                    td = resident.likers_count
+                    / td = resident.display_active
+                    / td = resident.likers_count
                     td = resident.reputation
                     td.text-right
                       => link_to fa_icon('pencil'), edit_resident_path(resident), class: 'btn btn-sm btn-primary'

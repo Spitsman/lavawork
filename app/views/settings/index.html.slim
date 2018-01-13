@@ -1,0 +1,22 @@
+section.content-header
+  h1 = t('menu.settings')
+
+section.content
+  .row
+    .col-sm-6
+      .box
+        .box-header
+          h3.box-title
+            | Экономика
+        .box-body
+          = simple_form_for resource_settings, as: :settings, url: settings_demurrage_url, html: { class: 'login__form' } do |f|
+            = f.input :demurrage, required: false, hint: 'Процент средств, сгорающий на счетах у резидентов каждый день'
+            => f.button :submit, 'Применить', class: 'btn btn-primary'
+          hr
+          = simple_form_for resource_settings, as: :settings, url: settings_commission_url, html: { class: 'login__form' } do |f|
+            = f.input :commission, required: false, hint: 'Процент коммиссии за перевод лаве'
+            => f.button :submit, 'Применить', class: 'btn btn-primary'
+          hr
+          = simple_form_for resource_settings, as: :settings, url: settings_master_account_url, html: { class: 'login__form' } do |f|
+            = f.input :master_account, required: false, hint: 'Telegram username аккаунта для сбора коммиссии'
+            => f.button :submit, 'Применить', class: 'btn btn-primary'

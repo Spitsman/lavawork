@@ -31,3 +31,8 @@ aside.main-sidebar
         = link_to messages_path
           i.fa.fa-envelope
           span = t('menu.messages')
+
+      li class="#{'active' if controller_name == 'settings'}"
+        = link_to settings_path
+          i.fa.fa-gear
+          span = t('menu.settings')

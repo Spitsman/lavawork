@@ -3,7 +3,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include CallbackQueryContext
 
   skip_before_action :verify_authenticity_token, :require_user
-  before_action :require_resident, only: [:days, :residents, :send_days]
+  before_action :require_resident, only: [:days, :residents, :send_lave]
   before_action :create_message
   # before_action :update_telegram_username, except: :start
 
@@ -25,39 +25,38 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
-  def send_days
+  def send_lave
     respond_with :message,
       text: "Укажите получателя",
       reply_markup: {
-        inline_keyboard: Resident.ordered.map do |r|
+        inline_keyboard: Resident.where.not(id: sender.id).ordered.map do |r|
           [ text: r.decorate.display_name, callback_data: "resident:#{{ id: r.id, name: r.decorate.display_name }.to_json}" ]
         end
       }
-    save_context :send_days
   end
 
   def resident_callback_query(data)
     data_hash = JSON.parse(data)
     receiver = Resident.find(data_hash['id'])
     session[:receiver] = data_hash['id']
-    save_context :wait_for_days
+    save_context :wait_for_lave
     edit_message :text, text: "Выбранный резидент: #{data_hash['name']}"
-    respond_with :message, text: 'Укажите количество дней'
+    respond_with :message, text: 'Укажите количество лаве'
   end
 
-  context_handler :wait_for_days do |*words|
-    days = words[0].to_i
-    response = if days <= 0
+  context_handler :wait_for_lave do |*words|
+    amount = words[0].to_i
+    response = if amount <= 0
       save_context :wait_for_days
       'Неверное значение'
-    elsif sender.days < days
-      save_context :wait_for_days
-      'У вас не хватает дней'
+    elsif sender.current_amount < amount
+      save_context :wait_for_lave
+      'У вас не хватает лаве'
     else
       receiver = Resident.find(session[:receiver])
-      TransferDaysService.call(sender, receiver, days)
-      session[:receiver] = nil
-      "#{Russian.pluralize(days, 'Перечислен', 'Перечислено', 'Перечислено')} #{days} #{Russian.pluralize(days, 'день', 'дня', 'дней')} пользователю #{receiver.decorate.display_name}"
+      TransferLaveService.call(sender, receiver, amount)
+      session.clear
+      "#{Russian.pluralize(amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{amount} лаве пользователю #{receiver.decorate.display_name}"
     end
     respond_with :message, text: response
   end
@@ -117,16 +116,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     end
   end
 
-  def residents
-    response = Resident.all.decorate.reduce(""){|memo, r| memo << r.display_name_with_telegram_username << "\n"}
-    respond_with :message, text: response
-  end
-
-  def days
-    response = "У вас #{Russian.pluralize(sender.days, 'остался', 'осталось', 'осталось')} #{sender.days} #{Russian.pluralize(sender.days, 'день', 'дня', 'дней')} коворкинга"
-    respond_with :message, text: response
-  end
-
   def voting
     respond_with :message,
       text: 'Голосуй за коворкеров',
@@ -150,7 +139,12 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
             [ text: "#{r.decorate.display_name} – #{r.likers_count} #{'👍' if r.liked_by?(sender)}", callback_data: "voting:#{{id: r.id}.to_json}" ]
           end
       }
-    end
+  end
+
+  def lave
+    respond_with :message,
+      text: "У вас #{sender.current_amount&.round(2)} лаве и #{sender.reputation} #{Russian.pluralize(sender.reputation, 'очко', 'очка', 'очков')} репутации"
+  end
 
   protected
 

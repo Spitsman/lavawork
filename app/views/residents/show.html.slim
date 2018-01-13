@@ -9,11 +9,12 @@ section.content
           = image_tag 'dummy.jpg', class: 'profile-user-img img-responsive img-circle'
           h3.profile-username.text-center
             = decorated_resident.display_name
-          p.text-muted.text-center Резидент
+          p.text-muted.text-center
+            = decorated_resident.demurrage_info
           ul.list-group.list-group-unbordered
             li.list-group-item
-              b Дни
-              p.pull-right = "#{decorated_resident.days} (до #{decorated_resident.display_expire_at})"
+              b Лаве
+              p.pull-right = "#{decorated_resident.display_current_amount}"
             li.list-group-item
               b Telegram Username
               p.pull-right = decorated_resident.telegram_username
@@ -60,13 +61,13 @@ section.content
                   thead
                     tr
                       th Кому
-                      th Дни
+                      th Лаве
                       th Дата
                   tbody
                     - sent_transactions_collection.each do |transaction|
                       tr
                         td = transaction.receiver&.decorate&.display_name || '–'
-                        td = transaction.days
+                        td = transaction.amount
                         td = transaction.decorate.display_created_at
               - else
                 center

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230214611) do
+ActiveRecord::Schema.define(version: 20180113201530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,15 +42,16 @@ ActiveRecord::Schema.define(version: 20171230214611) do
     t.string   "telegram_id"
     t.boolean  "active",            default: true, null: false
     t.string   "telegram_username"
-    t.date     "expire_at"
     t.integer  "likees_count",      default: 0
     t.integer  "likers_count",      default: 0
+    t.decimal  "amount"
+    t.datetime "amount_changed_at"
   end
 
   create_table "transactions", force: :cascade do |t|
     t.integer  "receiver_id", null: false
     t.integer  "sender_id",   null: false
-    t.integer  "days",        null: false
+    t.integer  "amount",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

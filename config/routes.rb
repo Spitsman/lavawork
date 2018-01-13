@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   resources :residents
   resources :messages, only: :index
 
+  get 'settings' => 'settings#index'
+  post 'settings/demurrage' => 'settings#demurrage'
+  post 'settings/commission' => 'settings#commission'
+  post 'settings/master_account' => 'settings#master_account'
+
   get 'telegram/broadcast' => 'telegram#broadcast', as: 'broadcast'
   post 'telegram/broadcast' => 'telegram#send_broadcast', as: 'send_broadcast'
   get 'telegram' => 'telegram#index', as: 'telegram'

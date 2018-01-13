@@ -15,14 +15,14 @@ section.content
                 tr
                   th = t('transactions.from')
                   th = t('transactions.to')
-                  th = t('transactions.days')
+                  th = t('transactions.amount')
                   th = t('transactions.created_at')
               tbody
                 - transactions_collection.each do |transaction|
                   tr
                     td = transaction.sender ? transaction.sender.display_name : '–'
                     td = transaction.receiver ? transaction.receiver.display_name : '–'
-                    td = transaction.days
+                    td = transaction.amount
                     td = transaction.display_created_at
 
             center

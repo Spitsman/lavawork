@@ -1,0 +1,9 @@
+---
+development:
+  demurrage: '1'
+  commission: '1'
+  master_account: 'wasilew'
+production:
+  demurrage: '1'
+  commission: '1'
+  master_account: 'wasilew'
