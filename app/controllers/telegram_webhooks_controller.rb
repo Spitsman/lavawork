@@ -143,7 +143,9 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def lave
     respond_with :message,
-      text: "У вас #{sender.current_amount&.round(2)} лаве и #{sender.reputation} #{Russian.pluralize(sender.reputation, 'очко', 'очка', 'очков')} репутации"
+      text: "Баланс – #{sender.current_amount&.round(2)} lava
+Голосов – #{sender.likers_count}
+Рейтинг – #{sender.rating}"
   end
 
   protected

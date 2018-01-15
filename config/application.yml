@@ -2,8 +2,12 @@
 development:
   demurrage: '1'
   commission: '1'
-  master_account: 'wasilew'
+  master_account: wasilew
+  accrual_frequency: 
+  additional_amount: '10'
 production:
   demurrage: '1'
   commission: '1'
-  master_account: 'wasilew'
+  master_account: wasilew
+  accrual_frequency: weekly
+  additional_amount: '10'

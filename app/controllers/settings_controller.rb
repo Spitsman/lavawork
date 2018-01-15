@@ -2,20 +2,14 @@ class SettingsController < ApplicationController
 
   helper_method :resource_settings
 
-  def demurrage
-    Settings.update_attribute!('demurrage', params[:settings][:demurrage])
-    resource_settings.reload!
+  Settings.keys.each do |settings_property|
+    define_method settings_property do
+      Settings.update_attribute!(settings_property, params[:settings][settings_property])
+      resource_settings.reload!
 
-    flash[:notice] = 'Настройки обновлены'
-    redirect_to settings_path
-  end
-
-  def commission
-    Settings.update_attribute!('commission', params[:settings][:commission])
-    resource_settings.reload!
-
-    flash[:notice] = 'Настройки обновлены'
-    redirect_to settings_path
+      flash[:notice] = 'Настройки обновлены'
+      redirect_to settings_path
+    end
   end
 
   protected

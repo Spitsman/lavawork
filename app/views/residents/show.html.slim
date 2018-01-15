@@ -79,13 +79,13 @@ section.content
                   thead
                     tr
                       th От кого
-                      th Дни
+                      th Лаве
                       th Дата
                   tbody
                     - received_transactions_collection.each do |transaction|
                       tr
                         td = transaction.sender&.decorate&.display_name || '–'
-                        td = transaction.days
+                        td = transaction.amount
                         td = transaction.decorate.display_created_at
               - else
                 center

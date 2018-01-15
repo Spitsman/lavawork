@@ -25,7 +25,11 @@ class Resident < ActiveRecord::Base
   end
 
   def reputation
-    self.likers(Resident).reduce(0){|sum,r| sum += r.likers_count} + self.likers_count
+    self.likers(Resident).reduce(0){|sum,r| sum += r.likers_count}
+  end
+
+  def rating
+    reputation + likers_count
   end
 
   def current_amount

@@ -18,6 +18,8 @@ ru:
         demurrage: Демередж
         commission: Коммиссия
         master_account: Мастер-аккаунт
+        accrual_frequency: Частота генерации лаве
+        additional_amount: Количество лаве
 
   transactions:
     from: От кого

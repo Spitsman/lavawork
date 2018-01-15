@@ -36,8 +36,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-toastr'
 end
 
+gem 'whenever'
 gem 'settingslogic'
-gem "socialization"
+gem 'socialization'
 gem 'russian', '~> 0.6.0'
 gem 'ionicons-rails'
 gem 'slim'

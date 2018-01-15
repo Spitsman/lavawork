@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   post 'settings/demurrage' => 'settings#demurrage'
   post 'settings/commission' => 'settings#commission'
   post 'settings/master_account' => 'settings#master_account'
+  post 'settings/accrual_frequency' => 'settings#accrual_frequency'
+  post 'settings/additional_amount' => 'settings#additional_amount'
 
   get 'telegram/broadcast' => 'telegram#broadcast', as: 'broadcast'
   post 'telegram/broadcast' => 'telegram#send_broadcast', as: 'send_broadcast'
