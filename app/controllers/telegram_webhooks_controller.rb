@@ -3,7 +3,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include CallbackQueryContext
 
   skip_before_action :verify_authenticity_token, :require_user
-  before_action :require_resident, only: [:days, :residents, :send_lave]
+  before_action :require_resident, only: [:lave, :voting, :send_lave]
   before_action :create_message
   # before_action :update_telegram_username, except: :start
 
@@ -104,12 +104,12 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       first_name: payload['contact']['first_name'],
       last_name: payload['contact']['last_name'],
       phone: payload['contact']['phone_number'],
-      expire_at: Date.today + 1.day,
       telegram_id: payload['contact']['user_id'],
-      telegram_username: from['username']
+      telegram_username: from['username'],
+      amount: 0
     )
     if resident.save
-      respond_with :message, text: 'Ты успешно зарегистрировался, у тебя 1 день коворкинга', reply_markup: { remove_keyboard: true }
+      respond_with :message, text: 'Ты успешно зарегистрировался', reply_markup: { remove_keyboard: true }
     else
       save_context :wait_for_contact
       respond_with :message, text: "Ошибка: #{resident.errors.full_messages.first}. Заполни контактные данные и попробуй еще раз."

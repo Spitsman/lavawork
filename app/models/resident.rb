@@ -21,7 +21,8 @@ class Resident < ActiveRecord::Base
   end
 
   before_save if: -> (obj) { 'amount'.in? obj.changes.keys } do
-    touch(:amount_changed_at)
+    # touch(:amount_changed_at)
+    self.amount_changed_at = Time.current
   end
 
   def reputation
