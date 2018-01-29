@@ -15,7 +15,7 @@ class SettingsController < ApplicationController
   protected
 
   def resource_settings
-    @resource_settings ||= Settings
+    Settings
   end
 
 end
