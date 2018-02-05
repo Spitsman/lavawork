@@ -4,10 +4,10 @@ development:
   commission: '1'
   master_account: wasilew
   accrual_frequency: weekly
-  additional_amount: '9'
+  additional_amount: '1000'
 production:
   demurrage: '1'
   commission: '1'
   master_account: wasilew
   accrual_frequency: weekly
-  additional_amount: '10'
+  additional_amount: '1000'
