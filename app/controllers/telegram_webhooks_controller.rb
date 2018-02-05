@@ -56,7 +56,11 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       receiver = Resident.find(session[:receiver])
       TransferLaveService.call(sender, receiver, amount)
       session.clear
-      "#{Russian.pluralize(amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{amount} лаве пользователю #{receiver.decorate.display_name}"
+
+      commission = amount * (Settings.commission.to_f / 100)
+      actual_amount = amount - commission
+
+      "#{Russian.pluralize(amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{actual_amount} лаве пользователю #{receiver.decorate.display_name}, комиссия: #{Settings.commission}%"
     end
     respond_with :message, text: response
   end
