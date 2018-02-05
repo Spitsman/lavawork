@@ -92,7 +92,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     else
       save_context :wait_for_contact
       respond_with :message,
-        text: "Привет, друг! Пришли мне свой контакт чтоб я мог тебя запомнить.",
+        text: "Привет, друг! Нажми кнопку ниже чтоб прислать мне свой контакт.",
         reply_markup: { keyboard: [[{request_contact: true, text: 'Отправить контакт'}]], resize_keyboard: true }
     end
   end
