@@ -27,11 +27,11 @@ class ResidentDecorator < BaseDecorator
   end
 
   def display_amount
-    h.number_to_currency(self.amount&.round(2), unit: 'l')
+    h.number_to_currency(self.amount&.round(2), unit: 'lv')
   end
 
   def display_current_amount
-    h.number_to_currency(self.current_amount&.round(2), unit: 'l')
+    h.number_to_currency(self.current_amount&.round(2), unit: 'lv')
   end
 
   def demurrage_info

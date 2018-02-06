@@ -24,7 +24,9 @@ ru:
   transactions:
     from: От кого
     to: Кому
-    amount: Лаве
+    amount: Переведено
+    commission: Комиссия
+    commission_holder: Держатель комиссии
     created_at: Дата
   residents:
     new: Новый резидент

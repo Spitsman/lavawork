@@ -9,4 +9,12 @@ class TransactionDecorator < BaseDecorator
     source.created_at.strftime('%d.%m.%Y %H:%M:%S')
   end
 
+  def display_commission
+    h.number_to_currency(self.commission&.round(2), unit: 'lv')
+  end
+
+  def display_amount
+    h.number_to_currency(self.amount&.round(2), unit: 'lv')
+  end
+
 end

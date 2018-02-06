@@ -38,4 +38,9 @@ class Resident < ActiveRecord::Base
     self.amount * ((1 - Settings.demurrage.to_f/100) ** ((DateTime.now.to_i - self.amount_changed_at.to_i)/(24*60*60)))
   end
 
+  def change_amount!(amount)
+    self.amount = self.current_amount + amount
+    self.save
+  end
+
 end

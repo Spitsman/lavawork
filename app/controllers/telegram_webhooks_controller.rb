@@ -15,7 +15,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def require_resident
     unless sender
-      respond_with :message, text: 'Вы не являетесь резидентом коворкинга' and return false
+      respond_with :message, text: 'Вы не являетесь резидентом Lava' and return false
     end
   end
 
@@ -37,7 +37,6 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def resident_callback_query(data)
     data_hash = JSON.parse(data)
-    receiver = Resident.find(data_hash['id'])
     session[:receiver] = data_hash['id']
     save_context :wait_for_lave
     edit_message :text, text: "Выбранный резидент: #{data_hash['name']}"
@@ -45,24 +44,17 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   context_handler :wait_for_lave do |*words|
+    receiver = Resident.find(session[:receiver])
     amount = words[0].to_i
-    response = if amount <= 0
-      save_context :wait_for_days
-      'Неверное значение'
-    elsif sender.current_amount < amount
-      save_context :wait_for_lave
-      'У вас не хватает лаве'
-    else
-      receiver = Resident.find(session[:receiver])
-      TransferLaveService.call(sender, receiver, amount)
+    result = TransferLaveService.new(sender, receiver, amount).call
+
+    if result.first
       session.clear
-
-      commission = amount * (Settings.commission.to_f / 100)
-      actual_amount = amount - commission
-
-      "#{Russian.pluralize(amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{actual_amount} лаве пользователю #{receiver.decorate.display_name}, комиссия: #{Settings.commission}%"
+    else
+      save_context :wait_for_lave
     end
-    respond_with :message, text: response
+
+    respond_with :message, text: result.second
   end
 
   def cancel
