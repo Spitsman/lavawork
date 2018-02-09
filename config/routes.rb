@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post 'sign_in' => 'user_sessions#create'
   delete 'sign_out' => 'user_sessions#destroy'
 
-  resources :residents
+  resources :residents, only: :index
   resources :messages, only: :index
 
   get 'settings' => 'settings#index'

@@ -37,7 +37,6 @@ source 'https://rails-assets.org' do
 end
 
 gem 'whenever'
-gem 'settingslogic'
 gem 'socialization'
 gem 'russian', '~> 0.6.0'
 gem 'ionicons-rails'

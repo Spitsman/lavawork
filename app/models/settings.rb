@@ -1,11 +1,23 @@
-class Settings < Settingslogic
-  source "#{Rails.root}/config/application.yml"
-  namespace Rails.env
+class Settings 
 
-  def self.update_attribute!(attribute, value)
-    file = YAML.load_file self.source
-    file[Rails.env][attribute] = value
-    File.open(self.source, 'w'){ |f| f.write file.to_yaml }
+  instance_methods.each do |m|
+    undef_method m unless m.to_s =~ /^__|method_missing|respond_to?/
   end
 
+  class << self
+
+    def method_missing(name, *args)
+      if name =~ /\=/
+        $redis.set name.to_s.gsub('=', ''), args[0]
+        args[0]
+      else
+        $redis.get name
+      end
+    end
+
+    def keys
+      [:demurrage, :commission, :master_account, :accrual_frequency, :additional_amount]
+    end
+
+  end
 end

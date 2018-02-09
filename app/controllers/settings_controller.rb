@@ -4,8 +4,7 @@ class SettingsController < ApplicationController
 
   Settings.keys.each do |settings_property|
     define_method settings_property do
-      Settings.update_attribute!(settings_property, params[:settings][settings_property])
-      resource_settings.reload!
+      Settings.send("#{settings_property}=", params[:settings][settings_property])
 
       flash[:notice] = 'Настройки обновлены'
       redirect_to settings_path
