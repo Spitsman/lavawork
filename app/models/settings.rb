@@ -21,7 +21,7 @@ class Settings
 
     def change_amount(amount)
       new_amount = $redis.get('amount').to_f + amount.to_f
-      @redis.set('amount', new_amount)
+      $redis.set('amount', new_amount)
       new_amount
     end
 
