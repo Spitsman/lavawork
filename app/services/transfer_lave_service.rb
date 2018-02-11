@@ -24,7 +24,7 @@ private
   def process
     ActiveRecord::Base.transaction do
       @sender.change_amount!   -@amount_with_commission
-      Settings.change_amount   @commission
+      Settings.change_amount!   @commission
       @receiver.change_amount! @amount
 
       Transaction.create(
