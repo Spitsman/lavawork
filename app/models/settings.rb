@@ -1,4 +1,4 @@
-class Settings 
+class Settings
 
   instance_methods.each do |m|
     undef_method m unless m.to_s =~ /^__|method_missing|respond_to?/
@@ -16,7 +16,13 @@ class Settings
     end
 
     def keys
-      [:demurrage, :commission, :master_account, :accrual_frequency, :additional_amount]
+      [:demurrage, :commission, :master_account, :accrual_frequency, :additional_amount, :amount]
+    end
+
+    def change_amount(amount)
+      new_amount = $redis.get('amount') + amount.to_f
+      @redis.set('amount', new_amount)
+      new_amount
     end
 
   end

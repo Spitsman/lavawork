@@ -23,10 +23,9 @@ private
 
   def process
     ActiveRecord::Base.transaction do
-
-      @sender.change_amount!         -@amount_with_commission
-      @master_account.change_amount! @commission
-      @receiver.change_amount!       @amount
+      @sender.change_amount!   -@amount_with_commission
+      Settings.change_amount   @commission
+      @receiver.change_amount! @amount
 
       Transaction.create(
         receiver_id: @receiver.id,
@@ -40,7 +39,7 @@ private
         text: "Резидент #{@sender.decorate.display_name} перечислил вам #{@amount} lv")
     end
 
-    [true, "#{Russian.pluralize(@amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{@amount} лаве пользователю #{@receiver.decorate.display_name}, комиссия: #{@commission} lv"]
+    [true, "#{Russian.pluralize(@amount, 'Перечислен', 'Перечислено', 'Перечислено')} #{@amount} lv пользователю #{@receiver.decorate.display_name}, комиссия: #{@commission} lv"]
   rescue Exception => e
     [false, "Ошибка: #{e}"]
   end
