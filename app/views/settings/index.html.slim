@@ -16,10 +16,10 @@ section.content
           = simple_form_for resource_settings, as: :settings, url: settings_commission_url, html: { class: 'login__form' } do |f|
             = f.input :commission, required: false, hint: 'Процент коммиссии за перевод лаве'
             => f.button :submit, 'Применить', class: 'btn btn-primary'
-          hr
-          = simple_form_for resource_settings, as: :settings, url: settings_master_account_url, html: { class: 'login__form' } do |f|
-            = f.input :master_account, required: false, hint: 'Telegram username аккаунта для сбора коммиссии'
-            => f.button :submit, 'Применить', class: 'btn btn-primary'
+          / hr
+          / = simple_form_for resource_settings, as: :settings, url: settings_master_account_url, html: { class: 'login__form' } do |f|
+          /   = f.input :master_account, required: false, hint: 'Telegram username аккаунта для сбора коммиссии'
+          /   => f.button :submit, 'Применить', class: 'btn btn-primary'
           hr
           = simple_form_for resource_settings, as: :settings, url: settings_accrual_frequency_url, html: { class: 'login__form' } do |f|
             = f.input :accrual_frequency, as: :select, collection: [['Раз в неделю','weekly'], ['Раз в две недели', 'biweekly'], ['Раз в месяц','monthly']], required: false, hint: 'Частота начисления лаве каждому резиденту пропорционально его рейтингу', include_blank: false

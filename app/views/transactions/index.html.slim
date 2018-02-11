@@ -17,7 +17,7 @@ section.content
                   th = t('transactions.to')
                   th.text-right = t('transactions.amount')
                   th.text-right = t('transactions.commission')
-                  th.text-right = t('transactions.commission_holder')
+                  / th.text-right = t('transactions.commission_holder')
                   th = t('transactions.created_at')
               tbody
                 - transactions_collection.each do |transaction|
@@ -26,7 +26,7 @@ section.content
                     td = transaction.receiver&.display_name
                     td.text-right = transaction.display_amount
                     td.text-right = transaction.display_commission
-                    td.text-right = transaction.commission_holder&.decorate&.display_name
+                    / td.text-right = transaction.commission_holder&.decorate&.display_name
                     td = transaction.display_created_at
 
             center
