@@ -24,6 +24,7 @@ section.content
                   th Голоса
                   th Репутация
                   th Рейтинг
+                  th Коэффициент
                   th.text-right
               tbody
                 - residents_collection.each do |resident|
@@ -37,6 +38,7 @@ section.content
                     td = resident.likers_count
                     td = resident.reputation
                     td = resident.rating
+                    td = resident.coefficient
                     td.text-right
                       => link_to fa_icon('pencil'), edit_resident_path(resident), class: 'btn btn-sm btn-primary'
                       => link_to fa_icon('trash'), resident_path(resident), method: 'delete', data: { confirm: 'Are you sure?'}, class: 'btn btn-danger btn-sm'

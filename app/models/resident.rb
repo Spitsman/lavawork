@@ -21,8 +21,13 @@ class Resident < ActiveRecord::Base
   end
 
   before_save if: -> (obj) { 'amount'.in? obj.changes.keys } do
-    # touch(:amount_changed_at)
     self.amount_changed_at = Time.current
+  end
+
+  def coefficient
+    position = self.class.order(id: :asc).pluck(:id).index(self.id) + 1
+    h = {1..10=>100, 11..100=>50, 101..1000=>20, 1001..10_000=>10, 10_001..100_000=>5, 100_001..1_000_000=>2, 1_000_001..1_000_000_000=>1}
+    h.select{|ary| position.in? ary}.values.first
   end
 
   def reputation

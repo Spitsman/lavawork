@@ -6,7 +6,7 @@ class ResidentDecorator < BaseDecorator
   decorates_association :received_transactions
 
   def display_name
-    [source.first_name&.titleize, source.last_name&.titleize].join(' ')
+    [source.first_name&.titleize, source.last_name&.titleize].join(' ').strip
   end
 
   def display_name_with_telegram_username

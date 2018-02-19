@@ -2,14 +2,19 @@ class AccrualService
 
   def self.call
     Resident.all.each do |resident|
-      additional_amount = Settings.additional_amount.to_f * resident.rating
-      resident.amount = resident.current_amount + additional_amount
-      resident.save
+      coefficient = resident.coefficient
+      additional_amount = Settings.additional_amount.to_f * resident.rating * coefficient
 
-      Telegram.bot.send_message(
-        chat_id: resident.telegram_id,
-        text: "Тебе начислено #{additional_amount}l (по #{Settings.additional_amount}l за каждый балл рейтинга)"
-      ) if additional_amount > 0
+      if additional_amount > 0
+        resident.change_amount! additional_amount
+        coefficient_text = ", твой коэфициент начисления: #{coefficient}" if coefficient > 1
+        text = "Тебе начислено #{additional_amount}l (по #{Settings.additional_amount}lv за каждый балл рейтинга#{coefficient_text})"
+
+        Telegram.bot.send_message(
+          chat_id: resident.telegram_id,
+          text: text
+        )
+      end
     end
   end
 
