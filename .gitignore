@@ -19,3 +19,4 @@ dump.rdb
 
 .byebug_history
 config/secrets.yml
+latest.dump

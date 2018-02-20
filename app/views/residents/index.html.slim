@@ -35,7 +35,11 @@ section.content
                     td = resident.telegram_id
                     td = resident.telegram_username
                     / td = resident.display_active
-                    td = resident.likers_count
+                    td
+                      a tabindex="#{resident.id}" data-toggle="popover" data-placement="bottom" data-html="true" data-content="#{resident.likers_list.html_safe}"
+                        => resident.likers_count
+                        = fa_icon('eye')
+
                     td = resident.reputation
                     td = resident.rating
                     td = resident.coefficient
@@ -45,3 +49,8 @@ section.content
   - else
     center
       h3.text-muted No residents found.
+
+javascript:
+  $(function () {
+    $('[data-toggle="popover"]').popover({trigger: 'focus'})
+  })

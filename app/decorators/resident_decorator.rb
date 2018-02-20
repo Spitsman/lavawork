@@ -39,4 +39,10 @@ class ResidentDecorator < BaseDecorator
     "Демередж вычитается из #{display_amount} начиная с #{display_amount_changed_at}"
   end
 
+  def likers_list
+    source.likers(source.class).map do |liker|
+      liker.decorate.display_name
+    end.join('<br>')
+  end
+
 end
