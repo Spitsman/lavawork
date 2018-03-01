@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_filter :require_user
 
-  # layout 'admin'
   layout 'application'
 
   def require_user

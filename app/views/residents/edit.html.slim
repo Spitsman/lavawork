@@ -6,4 +6,4 @@ section.content
     .col-md-6
       .box
         .box-body
-          = render partial: 'residents/shared/form', locals: { resident: resource_resident, url: resident_path(resource_resident), submit_text: t('update') }
+          = render partial: 'residents/shared/form', locals: { resident: resident_facade.resident, url: resident_path(resident_facade.resident), submit_text: t('update') }

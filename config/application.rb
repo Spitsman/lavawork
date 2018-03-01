@@ -25,6 +25,7 @@ module Lavawork
     config.time_zone = 'Moscow'
     config.autoload_paths << "#{Rails.root}/workers"
     config.autoload_paths << "#{Rails.root}/services"
+    config.autoload_paths << "#{Rails.root}/facades"
     config.telegram_updates_controller.session_store = :redis_store, {expires_in: 1.month}
   end
 end

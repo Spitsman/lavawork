@@ -1,6 +1,6 @@
-class TelegramController < ApplicationController
+class TelegramController < BaseController
 
-  helper_method :residents_collection
+  helper_method :users_collection
 
   def index
   end
@@ -9,14 +9,14 @@ class TelegramController < ApplicationController
   end
 
   def send_broadcast
-    res = Resident.all.map do |resident|
-      bot.send_message(text: message_params[:text], chat_id: resident.telegram_id)
+    res = User.all.map do |user|
+      bot.send_message(text: message_params[:text], chat_id: user.telegram_id)
     end
 
     if res.all?{|r| r['ok']}
-      flash[:success] = 'Messages sent'
+      flash[:success] = 'Cообщения отправлены'
     else
-      flash[:error] = 'Something goes wrong'
+      flash[:error] = 'Что-то пошло не так'
     end
 
     redirect_to broadcast_path
@@ -26,7 +26,7 @@ class TelegramController < ApplicationController
     res = bot.send_message(text: message_params[:text], chat_id: message_params[:chat_id])
 
     if res['ok']
-      flash[:success] = 'Message sent'
+      flash[:success] = 'Сообщение отправлено'
     else
       flash[:error] = "#{JSON.parse(res.body)['error_code']} #{JSON.parse(res.body)['description']}"
     end
@@ -48,8 +48,8 @@ class TelegramController < ApplicationController
     params.fetch(:message, {})
   end
 
-  def residents_collection
-    @residents_collection ||= Resident.active.map{|r|[r.decorate.display_name, r.telegram_id]}
+  def users_collection
+    @users_collection ||= User.all.map{|u|[u.decorate.display_name, u.telegram_id]}
   end
 
 end

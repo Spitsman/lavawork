@@ -1,4 +1,4 @@
-class SettingsController < ApplicationController
+class SettingsController < BaseController
 
   helper_method :resource_settings
 

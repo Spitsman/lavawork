@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206095438) do
+ActiveRecord::Schema.define(version: 20180301200214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,24 +28,9 @@ ActiveRecord::Schema.define(version: 20180206095438) do
   add_index "likes", ["liker_id", "liker_type"], name: "fk_likes", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "resident_id"
+    t.integer  "user_id"
     t.text     "text"
     t.datetime "created_at"
-  end
-
-  create_table "residents", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "telegram_id"
-    t.boolean  "active",            default: true, null: false
-    t.string   "telegram_username"
-    t.integer  "likees_count",      default: 0
-    t.integer  "likers_count",      default: 0
-    t.decimal  "amount"
-    t.datetime "amount_changed_at"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -59,12 +44,21 @@ ActiveRecord::Schema.define(version: 20180206095438) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "login",             null: false
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "telegram_id"
+    t.string   "telegram_username"
+    t.integer  "likees_count",      default: 0
+    t.integer  "likers_count",      default: 0
+    t.decimal  "amount"
+    t.datetime "amount_changed_at"
+    t.string   "type",              default: "resident"
   end
 
 end

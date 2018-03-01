@@ -4,7 +4,6 @@ class TransferLaveService
     @sender = sender; @receiver = receiver; @amount = amount.to_i
     @commission = amount * (Settings.commission.to_f / 100)
     @amount_with_commission = amount + @commission
-    @master_account = Resident.find_by(telegram_username: Settings.master_account)
   end
 
   def call
@@ -32,7 +31,6 @@ private
         sender_id: @sender.id,
         amount: @amount,
         commission: @commission,
-        commission_holder_id: @master_account.id
       )
 
       Telegram.bot.send_message(chat_id: @receiver.telegram_id,

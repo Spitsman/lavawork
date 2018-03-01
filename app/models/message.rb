@@ -1,8 +1,8 @@
 class Message < ActiveRecord::Base
 
-  belongs_to :resident
+  belongs_to :user
 
-  validates :resident, presence: true
+  validates :user, presence: true
   validates :text, presence: true
 
   scope :ordered, -> { order(created_at: :desc) }

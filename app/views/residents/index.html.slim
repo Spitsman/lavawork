@@ -2,12 +2,12 @@ section.content-header
   h1 = t('menu.residents')
 
 section.content
-  - if residents_collection.any?
+  - if resident_facade.collection.any?
     .row
       .col-sm-12
         .box
           .box-header
-            .pull-right
+            / .pull-right
               = link_to t('residents.new'), new_resident_path, class: 'btn btn-primary'
             h3.box-title
               | Список резидентов
@@ -20,21 +20,19 @@ section.content
                   th.text-right = t('residents.current_amount')
                   th Telegram ID
                   th Telegram Username
-                  / th Active
                   th Голоса
                   th Репутация
                   th Рейтинг
                   th Коэффициент
                   th.text-right
               tbody
-                - residents_collection.each do |resident|
+                - resident_facade.collection.each do |resident|
                   tr
-                    td = link_to resident.display_name, resident
+                    td = link_to resident.display_name, resident_path(resident)
                     td = resident.phone
                     td.text-right = resident.display_current_amount
                     td = resident.telegram_id
                     td = resident.telegram_username
-                    / td = resident.display_active
                     td
                       a tabindex="#{resident.id}" data-toggle="popover" data-placement="bottom" data-html="true" data-content="#{resident.likers_list.html_safe}"
                         => resident.likers_count

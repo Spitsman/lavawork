@@ -1,4 +1,4 @@
-class MessagesController < ApplicationController
+class MessagesController < BaseController
 
   helper_method :messages_collection
 

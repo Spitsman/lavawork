@@ -18,7 +18,7 @@ section.content
       .box
         .box-body
           = simple_form_for :message, as: :message, url: send_message_path, html: { class: 'login__form' } do |f|
-            = f.input :chat_id, collection: residents_collection, include_blank: false, label: t('message.receiver')
+            = f.input :chat_id, collection: users_collection, include_blank: false, label: t('message.receiver')
             = f.input :text, as: :text, label: t('message.text')
 
             => f.button :submit, t('message.send'), class: 'btn btn-primary'

@@ -20,7 +20,10 @@ ru:
         master_account: Мастер-аккаунт
         accrual_frequency: Частота генерации лаве
         additional_amount: Количество лаве
-
+  users:
+    types:
+      admin: Админ
+      resident: Резидент
   transactions:
     from: От кого
     to: Кому
@@ -46,6 +49,7 @@ ru:
     broadcast: Рассылка
     messages: История сообщений
     settings: Настройки
+    my: Личный кабинет
   broadcast:
     alert: Это сообщение будет отправлено всем резидентам
   sign_out: Выйти

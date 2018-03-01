@@ -1,0 +1,89 @@
+.row
+  .col-md-4
+    .box.box-primary
+      .box-body.box-profile
+        = image_tag 'dummy.jpg', class: 'profile-user-img img-responsive img-circle'
+        h3.profile-username.text-center
+          = resident_facade.decorated.display_name
+        p.text-muted.text-center
+          = resident_facade.decorated.demurrage_info
+        ul.list-group.list-group-unbordered
+          li.list-group-item
+            b Лава
+            p.pull-right = "#{resident_facade.decorated.display_current_amount}"
+          li.list-group-item
+            b Telegram Username
+            p.pull-right = resident_facade.decorated.telegram_username
+          li.list-group-item
+            b Telegram ID
+            p.pull-right = resident_facade.decorated.telegram_id
+          li.list-group-item
+            b Телефон
+            p.pull-right = resident_facade.decorated.phone
+          - if current_user.admin?
+            = link_to 'Редактировать', edit_resident_path(resident_facade.decorated), class: 'btn btn-primary btn-block'
+
+    .box.box-primary
+      .box-header.with-border
+        h3.box-title Последние сообщения
+      .box-body.box-profile
+        - if resident_facade.messages_collection.any?
+          - resident_facade.messages_collection.each do |message|
+            p = message.text
+            p.text-muted = message.display_created_at
+            hr
+        - else
+          center
+            em.text-muted Пусто
+
+
+
+  .col-md-8
+    .box.box-primary
+      .box-header.with-border
+        h3.box-title Последние транзакции
+      / .box-body
+      .nav-tabs-custom
+        ul.nav.nav-tabs
+          li.active
+            a href="#sent_transactions" data-toggle="tab" aria-expanded="true"
+              | Отправленные
+          li
+            a href="#received_transactions" data-toggle="tab" aria-expanded="true"
+              | Полученные
+        .tab-content
+          .tab-pane.active#sent_transactions
+            - if resident_facade.sent_transactions_collection.any?
+              table.table.table-bproducted.table-hover.dataTable
+                thead
+                  tr
+                    th Кому
+                    th Лаве
+                    th Дата
+                tbody
+                  - resident_facade.sent_transactions_collection.each do |transaction|
+                    tr
+                      td = transaction.receiver&.decorate&.display_name || '–'
+                      td = transaction.amount
+                      td = transaction.decorate.display_created_at
+            - else
+              center
+                em.text-muted Пусто
+
+          .tab-pane#received_transactions
+            - if resident_facade.received_transactions_collection.any?
+              table.table.table-bproducted.table-hover.dataTable
+                thead
+                  tr
+                    th От кого
+                    th Лаве
+                    th Дата
+                tbody
+                  - resident_facade.received_transactions_collection.each do |transaction|
+                    tr
+                      td = transaction.sender&.decorate&.display_name || '–'
+                      td = transaction.amount
+                      td = transaction.decorate.display_created_at
+            - else
+              center
+                em.text-muted Пусто

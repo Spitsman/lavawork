@@ -1,38 +1,50 @@
 aside.main-sidebar
   /! sidebar: style can be found in sidebar.less
   section.sidebar
-    ul.sidebar-menu data-widget="tree"
-      li.header Главное меню
-      li class="#{'active' if controller_name == 'residents'}"
-        = link_to residents_path do
-          i.fa.fa-users
-          span = t('menu.residents')
-      li.treeview class="#{'active' if controller_name == 'telegram'}"
-        a href="#"
-          i.fa.fa-telegram
-          span Telegram
-          span.pull-right-container
-            i.fa.fa-angle-left.pull-right
-        ul.treeview-menu
-          li class="#{'active' if action_name == 'index'}"
-            = link_to telegram_path do
-              i.fa.fa-circle-o
-              = t('menu.send_message')
-          li class="#{'active' if action_name == 'broadcast'}"
-            = link_to broadcast_path do
-              i.fa.fa-circle-o
-              = t('menu.broadcast')
-      li class="#{'active' if controller_name == 'transactions'}"
-        = link_to transactions_path
-          i.fa.fa-th
-          span = t('menu.transactions')
+    - if current_user.admin?
+      ul.sidebar-menu data-widget="tree"
+        li.header Главное меню
+        li class="#{'active' if controller_name == 'residents'}"
+          = link_to residents_path do
+            i.fa.fa-users
+            span = t('menu.residents')
+        li.treeview class="#{'active' if controller_name == 'telegram'}"
+          a href="#"
+            i.fa.fa-telegram
+            span Telegram
+            span.pull-right-container
+              i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            li class="#{'active' if action_name == 'index'}"
+              = link_to telegram_path do
+                i.fa.fa-circle-o
+                = t('menu.send_message')
+            li class="#{'active' if action_name == 'broadcast'}"
+              = link_to broadcast_path do
+                i.fa.fa-circle-o
+                = t('menu.broadcast')
+        li class="#{'active' if controller_name == 'transactions'}"
+          = link_to transactions_path
+            i.fa.fa-th
+            span = t('menu.transactions')
 
-      li class="#{'active' if controller_name == 'messages'}"
-        = link_to messages_path
-          i.fa.fa-envelope
-          span = t('menu.messages')
+        li class="#{'active' if controller_name == 'messages'}"
+          = link_to messages_path
+            i.fa.fa-envelope
+            span = t('menu.messages')
 
-      li class="#{'active' if controller_name == 'settings'}"
-        = link_to settings_path
-          i.fa.fa-gear
-          span = t('menu.settings')
+        li class="#{'active' if controller_name == 'settings'}"
+          = link_to settings_path
+            i.fa.fa-gear
+            span = t('menu.settings')
+    - if current_user.resident?
+      ul.sidebar-menu data-widget="tree"
+        li.header Главное меню
+        li class="#{'active' if controller_name == 'home'}"
+          = link_to my_path
+            i.fa.fa-user
+            span = t('menu.my')
+        /li class="#{'active' if controller_name == 'transactions'}"
+          = link_to '#'
+            i.fa.fa-th
+            span = t('menu.transactions')

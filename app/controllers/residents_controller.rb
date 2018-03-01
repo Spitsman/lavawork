@@ -1,27 +1,9 @@
-class ResidentsController < ApplicationController
+class ResidentsController < BaseController
 
-  helper_method :resource_resident, :residents_collection, :decorated_resident, :sent_transactions_collection, :received_transactions_collection, :messages_collection
-
-  def index
-  end
-
-  def new
-  end
-
-  def create
-    if resource_resident.save
-      flash[:success] = 'Резидент создан'
-      redirect_to residents_path
-    else
-      render action: :new
-    end
-  end
-
-  def edit
-  end
+  helper_method :resident_facade
 
   def update
-    if resource_resident.update_attributes(resident_params)
+    if resident_facade.resident.update_attributes(resident_params)
       flash[:success] = 'Резидент обновлен'
       redirect_to residents_path
     else
@@ -30,38 +12,18 @@ class ResidentsController < ApplicationController
   end
 
   def destroy
-    resource_resident.destroy
+    resident_facade.resident.destroy
     redirect_to residents_path
   end
 
   protected
 
-  def residents_collection
-    @residents_collection ||= Resident.order(:id).decorate
-  end
-
-  def resource_resident
-    @resource_resident ||= params[:id].present? ? Resident.find(params[:id]) : Resident.new(resident_params)
-  end
-
   def resident_params
     params.fetch(:resident, {}).permit!
   end
 
-  def decorated_resident
-    @decorated_resident ||= resource_resident.decorate
-  end
-
-  def sent_transactions_collection
-    @sent_transactions_collection ||= resource_resident.sent_transactions.ordered.limit(20).decorate
-  end
-
-  def received_transactions_collection
-    @received_transactions_collection ||= resource_resident.received_transactions.ordered.limit(20).decorate
-  end
-
-  def messages_collection
-    @messages_collection ||= resource_resident.messages.ordered.limit(10).decorate
+  def resident_facade
+    @resident_facade ||= ResidentFacade.new(params[:id] ? User.residents.find(params[:id]) : nil)
   end
 
 end

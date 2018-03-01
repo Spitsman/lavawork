@@ -20,5 +20,9 @@ Rails.application.routes.draw do
 
   resources :transactions, only: :index
 
+  namespace :my do
+    get '/' => 'home#index'
+  end
+
   telegram_webhooks TelegramWebhooksController
 end

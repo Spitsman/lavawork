@@ -6,6 +6,6 @@
     p.login-box-msg
       | Вход в админку
     = simple_form_for resource_session, as: :user_session, url: sign_in_path, method: :post, html: { class: 'login__form' } do |f|
-      = f.input :login, label: false, placeholder: 'Login'
-      = f.input :password, label: false, placeholder: 'Password'
+      = f.input :phone, label: false, placeholder: 'Телефон'
+      = f.input :password, label: false, placeholder: 'Пароль'
       = f.button :submit, t('sign_in'), class: 'btn btn-primary'
