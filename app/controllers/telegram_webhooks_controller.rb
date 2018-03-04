@@ -30,7 +30,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
     respond_with :message,
       text: "Укажите получателя",
       reply_markup: {
-        inline_keyboard: User.residents.where.not(id: sender.id).ordered.map do |r|
+        inline_keyboard: User.where.not(id: sender.id).ordered.map do |r|
           [ text: r.decorate.display_name, callback_data: "resident:#{{ id: r.id, name: r.decorate.display_name }.to_json}" ]
         end
       }
@@ -45,7 +45,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   end
 
   context_handler :wait_for_lava do |*words|
-    receiver = User.residents.find(session[:receiver])
+    receiver = User.find(session[:receiver])
     amount = words[0].to_i
     result = TransferLaveService.new(sender, receiver, amount).call
 
@@ -122,7 +122,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       text: 'Голосуй за коворкеров',
       reply_markup: {
         inline_keyboard:
-          User.residents.where.not(id: sender).ordered.map do |r|
+          User.where.not(id: sender).ordered.map do |r|
             [ text: "#{r.decorate.display_name} – #{r.likers_count} #{'👍' if r.liked_by?(sender)}", callback_data: "voting:#{{id: r.id}.to_json}" ]
           end
       }
@@ -130,13 +130,13 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
 
   def voting_callback_query(data)
     data_hash = JSON.parse(data)
-    res = User.residents.find(data_hash['id'])
+    res = User.find(data_hash['id'])
     sender.toggle_like! res
     edit_message :text,
       text: "Ты проголосовал за: #{res.decorate.display_name}",
       reply_markup: {
         inline_keyboard:
-          User.residents.where.not(id: sender).ordered.map do |r|
+          User.where.not(id: sender).ordered.map do |r|
             [ text: "#{r.decorate.display_name} – #{r.likers_count} #{'👍' if r.liked_by?(sender)}", callback_data: "voting:#{{id: r.id}.to_json}" ]
           end
       }
