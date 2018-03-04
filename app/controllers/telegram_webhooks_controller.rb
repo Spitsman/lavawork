@@ -1,6 +1,7 @@
 class TelegramWebhooksController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
   include CallbackQueryContext
+  include Bot::ResetPassword
 
   skip_before_action :verify_authenticity_token, :require_user
   before_action :require_resident, only: [:lava, :voting, :send_lava]
@@ -96,16 +97,20 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
       return
     end
 
+    password = SecureRandom.hex 4
+
     resident = User.residents.new(
       first_name: payload['contact']['first_name'],
       last_name: payload['contact']['last_name'],
       phone: payload['contact']['phone_number'],
       telegram_id: payload['contact']['user_id'],
       telegram_username: from['username'],
-      amount: 0
+      amount: 0,
+      password: password,
+      password_confirmation: password
     )
     if resident.save
-      respond_with :message, text: 'Ты успешно зарегистрировался', reply_markup: { remove_keyboard: true }
+      respond_with :message, text: "Ты успешно зарегистрировался, твой пароль: #{password}", reply_markup: { remove_keyboard: true }
     else
       save_context :wait_for_contact
       respond_with :message, text: "Ошибка: #{resident.errors.full_messages.first}. Заполни контактные данные и попробуй еще раз."
@@ -147,7 +152,7 @@ class TelegramWebhooksController < Telegram::Bot::UpdatesController
   protected
 
   def sender
-    @sender ||= User.residents.find_by(telegram_id: from['id'])
+    @sender ||= User.find_by(telegram_id: from['id'])
   end
 
 end

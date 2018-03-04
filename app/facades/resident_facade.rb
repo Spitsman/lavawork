@@ -7,7 +7,7 @@ class ResidentFacade
   end
 
   def collection
-    @collection ||= User.residents.order(:id).decorate
+    @collection ||= User.order(:id).decorate
   end
 
   def decorated

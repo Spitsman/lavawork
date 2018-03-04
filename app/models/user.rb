@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
 
-  validates :login, presence: true
   validates :phone, uniqueness: { allow_nil: true, allow_blank: true }, presence: true
   validates :first_name, presence: true
 
@@ -29,6 +28,7 @@ class User < ActiveRecord::Base
 
   before_validation do
     self.telegram_id = nil if self.telegram_id.blank?
+    self.phone.gsub!('+', '')
   end
 
   before_save if: -> (obj) { 'amount'.in? obj.changes.keys } do

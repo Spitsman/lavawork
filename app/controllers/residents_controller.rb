@@ -23,7 +23,7 @@ class ResidentsController < BaseController
   end
 
   def resident_facade
-    @resident_facade ||= ResidentFacade.new(params[:id] ? User.residents.find(params[:id]) : nil)
+    @resident_facade ||= ResidentFacade.new(params[:id] ? User.find(params[:id]) : nil)
   end
 
 end
