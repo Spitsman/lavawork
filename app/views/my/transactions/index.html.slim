@@ -1,0 +1,8 @@
+section.content-header
+  h1 Мои транзакции
+
+section.content
+  = react_component 'Transactions',
+    transactions: resident_facade.sent_transactions_collection,
+    commission_percent: Settings.commission.to_f,
+    users: User.all.decorate.map{|u| {id: u.id, name: u.display_name}}

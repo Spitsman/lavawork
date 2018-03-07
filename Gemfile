@@ -35,7 +35,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap-sass'
   gem 'rails-assets-toastr'
 end
-
+gem 'react-rails'
+gem 'webpacker'
 gem 'whenever'
 gem 'socialization'
 gem 'russian', '~> 0.6.0'

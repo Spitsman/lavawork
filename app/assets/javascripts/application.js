@@ -6,3 +6,6 @@
 //= require back/plugins/datatables/dataTables.bootstrap.min
 //= require back/app
 //= require toastr
+//= require react
+//= require react_ujs
+//= require components

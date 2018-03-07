@@ -44,6 +44,10 @@ aside.main-sidebar
           = link_to my_path
             i.fa.fa-user
             span = t('menu.my')
+        li class="#{'active' if controller_name == 'transactions'}"
+          = link_to my_transactions_path
+            i.fa.fa-th
+            span = t('menu.transactions')
         /li class="#{'active' if controller_name == 'transactions'}"
           = link_to '#'
             i.fa.fa-th
