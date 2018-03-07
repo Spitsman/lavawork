@@ -3,6 +3,6 @@ section.content-header
 
 section.content
   = react_component 'Transactions',
-    transactions: resident_facade.sent_transactions_collection,
+    transactions: resident_facade.sent_transactions_collection.map{|t| {receiver: t.receiver.decorate.display_name, amount: t.amount, commission: t.commission, created_at: t.decorate.display_created_at}},
     commission_percent: Settings.commission.to_f,
-    users: User.all.decorate.map{|u| {id: u.id, name: u.display_name}}
+    users: User.where.not(id: current_user.id).ordered.decorate.map{|u| {id: u.id, name: u.display_name}}

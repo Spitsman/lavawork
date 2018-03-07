@@ -1,12 +1,13 @@
 var Transactions = React.createClass({
   getInitialState: function(){
     return {
-      commission_percent: 1,
-      amount: 0,
-      total: 0,
-      commission: 0,
+      commission_percent: this.props.commission_percent,
+      amount: null,
+      total: null,
+      commission: null,
       receiver: this.props.users[0].id,
-      transactions: this.props.transactions
+      transactions: this.props.transactions,
+      error: false
     }
   },
   onAmountChange: function(e){
@@ -28,18 +29,22 @@ var Transactions = React.createClass({
       success: function (data) {
         console.log(data);
         var transactions = self.state.transactions.slice();
-        transactions.unshift(data.transaction)
+        transactions.unshift(data.transaction);
         self.setState({
           ...self.state,
-          amount: 0,
-          total: 0,
-          commission: 0,
+          amount: '',
+          total: '',
+          commission: '',
+          error: false,
           transactions
         });
       },
       error: function(data) {
-        alert('error');
         console.log(data);
+        self.setState({
+          ...self.state,
+          error: data.responseJSON.message
+        })
       }
     });
   },
@@ -84,11 +89,22 @@ var Transactions = React.createClass({
       </div>
     )
   },
+  renderErrorBlock: function() {
+    if (this.state.error) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          <strong>Ошибка!</strong>{' ' + this.state.error}
+        </div>
+      )
+    } else {
+      return false;
+    }
+  },
   render() {
     var transactions = this.state.transactions.map(function(transaction, index){
       return (
         <tr key={index}>
-          <td>{transaction.receiver_id}</td>
+          <td>{transaction.receiver}</td>
           <td>{transaction.amount}</td>
           <td>{transaction.commission}</td>
           <td>{transaction.created_at}</td>
@@ -98,6 +114,7 @@ var Transactions = React.createClass({
 
     return(
       <div>
+      {this.renderErrorBlock()}
       {this.renderForm()}
       <div className='box box-primary'>
         <div className='nav-tabs-custom'>
