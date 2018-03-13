@@ -2,4 +2,4 @@ section.content-header
   h1 Профиль резидента
 
 section.content
-  = render partial: 'residents/shared/show'
+  = render partial: 'residents/shared/show', locals: { facade: resident_facade }

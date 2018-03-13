@@ -1,4 +1,4 @@
-class My::TransactionsController < My::BaseController
+class My::TransactionsController < ApplicationController
 
   def create
     result = TransferLaveService.new(current_user, User.find(params[:receiver]), params[:amount]).call

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :current_user
+  helper_method :current_user, :current_user_facade
 
   before_action :set_locale
   before_filter :require_user
@@ -26,6 +26,10 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = :ru
+  end
+
+  def current_user_facade
+    @current_user_facade ||= ResidentFacade.new(current_user)
   end
 
 end

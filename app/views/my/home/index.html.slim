@@ -2,4 +2,4 @@ section.content-header
   h1 = current_user.decorate.display_name
 
 section.content
-  = render partial: 'residents/shared/show'
+  = render partial: 'residents/shared/show', locals: { facade: current_user_facade }

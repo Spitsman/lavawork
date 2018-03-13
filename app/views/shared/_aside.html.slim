@@ -23,10 +23,23 @@ aside.main-sidebar
               = link_to broadcast_path do
                 i.fa.fa-circle-o
                 = t('menu.broadcast')
-        li class="#{'active' if controller_name == 'transactions'}"
-          = link_to transactions_path
+
+
+        li.treeview class="#{'active' if controller_name == 'transactions'}"
+          a href="#"
             i.fa.fa-th
             span = t('menu.transactions')
+            span.pull-right-container
+              i.fa.fa-angle-left.pull-right
+          ul.treeview-menu
+            li class="#{'active' if request.path == '/transactions'}"
+              = link_to transactions_path do
+                i.fa.fa-circle-o
+                = t('menu.transactions_all')
+            li class="#{'active' if request.path == '/my/transactions'}"
+              = link_to my_transactions_path do
+                i.fa.fa-circle-o
+                = t('menu.transactions_my')
 
         li class="#{'active' if controller_name == 'messages'}"
           = link_to messages_path

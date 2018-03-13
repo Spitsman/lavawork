@@ -45,6 +45,8 @@ ru:
   menu:
     residents: Резиденты
     transactions: Транзакции
+    transactions_all: Транзакции резидентов
+    transactions_my: Мои транзакции
     send_message: Отправить сообщение
     broadcast: Рассылка
     messages: История сообщений
